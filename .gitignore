@@ -1,0 +1,5 @@
+/target/
+/.idea/
+/terraform/.terraform/
+/terraform/.terraform.lock.hcl
+/terraform/target/
