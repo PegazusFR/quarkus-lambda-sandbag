@@ -21,12 +21,12 @@ resource "aws_lambda_function" "test_sqs_lambda" {
   source_code_hash = data.archive_file.quarkus-sqs-lambda.output_base64sha256
   architectures = ["x86_64"]
   runtime = "java21"
-  timeout = "15"
+  timeout = "60"
   memory_size = "1769"
   environment {
     variables = {
       foo = "yoyo"
-      QUARKUS_LAMBDA_HANDLER="sqs-p"
+      QUARKUS_LAMBDA_HANDLER="sqs-p2"
       QUARKUS_LOG_CONSOLE_JSON= "true"
     }
   }
@@ -42,9 +42,9 @@ resource "aws_lambda_alias" "quarkus-sqs-alias" {
 resource "aws_lambda_event_source_mapping" "example" {
   event_source_arn = aws_sqs_queue.terraform_queue.arn
   function_name    = aws_lambda_alias.quarkus-sqs-alias.arn
-  maximum_batching_window_in_seconds = 4
+  maximum_batching_window_in_seconds = 20
   function_response_types = ["ReportBatchItemFailures"]
-  batch_size       = 10
+  batch_size       = 50
   enabled          = true
 }
 
